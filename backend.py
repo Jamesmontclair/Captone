@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException
 import requests
 import pandas as pd
-import talib
 from functools import lru_cache
-from config import ALPHA_VANTAGE_API_KEY, GOOGLE_FINANCE_API_KEY, ALPHA_VANTAGE_BASE_URL, GOOGLE_FINANCE_BASE_URL
+from config import (
+    ALPHA_VANTAGE_API_KEY, GOOGLE_FINANCE_API_KEY, 
+    ALPHA_VANTAGE_BASE_URL, GOOGLE_FINANCE_BASE_URL
+)
 
 app = FastAPI()
 
@@ -15,8 +17,8 @@ def get_stock_data_alpha(symbol: str):
 
 @lru_cache(maxsize=10)
 def get_stock_data_google(query: str):
-    """Fetch stock data from Google Finance API (via SerpAPI)."""
-    url = f"{GOOGLE_FINANCE_BASE_URL}?q={query}&api_key={GOOGLE_FINANCE_API_KEY}"
+    """Fetch stock data from Google Finance (via SerpAPI)."""
+    url = f"{GOOGLE_FINANCE_BASE_URL}?engine=google_finance&q={query}&api_key={GOOGLE_FINANCE_API_KEY}"
     return fetch_stock_data(url)
 
 def fetch_stock_data(url: str):
